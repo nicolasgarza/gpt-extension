@@ -1,56 +1,57 @@
-import React, { useState } from 'react';
-import './App.css';
-import ProfileDropdown from './ProfileDropdown';
-import ProfileManager from './ProfileManager';
-import ApplyButton from './ApplyButton';
-import {Profile, ChatGPTPlugin} from './types';
+import { FC, useEffect, useState } from "react";
+import { NewTodoForm } from "./NewTodoForm";
+import "./styles.css";
+import { TodoList } from "./TodoList";
 
-type Plugin = {
-   id: string;
-   name: string;
-   enabled: boolean;
-};
- 
-const App: React.FC = () => {
-  const [profiles, setProfiles] = useState<Record<string, Profile>>({
-    'Default': {
-      name: 'Default',
-      plugins: [
-        { id: '1', name: 'Plugin 1', enabled: true },
-        { id: '2', name: 'Plugin 2', enabled: false },
-      ],
-    },
-    'Profile 2': {
-      name: 'Profile 2',
-      plugins: [
-        { id: '1', name: 'Plugin 1', enabled: false },
-        { id: '2', name: 'Plugin 2', enabled: true },
-      ],
-    },
+export interface TodoItemProp {
+  id: string;
+  title: string;
+  completed: boolean;
+}
+
+const App: FC = () => {
+  const [todos, setTodos] = useState<TodoItemProp[]>(() => {
+    const localValue = localStorage.getItem("ITEMS");
+    if (localValue == null) return [];
+
+    return JSON.parse(localValue);
   });
 
-  const [selectedProfile, setSelectedProfile] = useState<string>('Default');
+  useEffect(() => {
+    localStorage.setItem("ITEMS", JSON.stringify(todos));
+  }, [todos]);
 
-  const onSelectProfile = (profileName: string) => {
-    setSelectedProfile(profileName);
+  function addTodo(title: string) {
+    setTodos((currentTodos: TodoItemProp[]) => [
+      ...currentTodos,
+      { id: crypto.randomUUID(), title, completed: false },
+    ]);
   }
 
-  const onApplyProfile = () => {
-    // Logic to apply the profile
-  };
+  function toggleTodo(id: string, completed: boolean) {
+    setTodos((currentTodos: TodoItemProp[]) =>
+      currentTodos.map((todo: TodoItemProp) => {
+        if (todo.id === id) {
+          return { ...todo, completed };
+        }
+        return todo;
+      })
+    );
+  }
+
+  function deleteTodo(id: string) {
+    setTodos((currentTodos: TodoItemProp[]) =>
+      currentTodos.filter((todo: TodoItemProp) => todo.id !== id)
+    );
+  }
 
   return (
-    <div className="App">
-      <h1>ChatGPT Plugin Profiles</h1>
-      <ProfileDropdown
-        profiles={profiles}
-        selectedProfile={selectedProfile}
-        onSelectProfile={onSelectProfile}
-      />
-
-      <ProfileManager profiles={profiles} setProfiles={setProfiles} />
-      <ApplyButton onApply={onApplyProfile} />
-    </div>
+    <>
+      <NewTodoForm onSubmit={addTodo} />
+      <h1 className="header">Todo List</h1>
+      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+    </>
   );
 };
+
 export default App;
