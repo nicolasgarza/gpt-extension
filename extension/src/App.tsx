@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { NewTodoForm } from "./NewTodoForm";
 import "./styles.css";
 import { TodoList } from "./TodoList";
+import  Header from "./header";
 
 export interface TodoItemProp {
   id: string;
@@ -45,8 +46,13 @@ const App: FC = () => {
     );
   }
 
+  const addProfile = () => {
+    //
+  };
+
   return (
     <>
+      <Header onButtonClick={addProfile}/> 
       <NewTodoForm onSubmit={addTodo} />
       <h1 className="header">Todo List</h1>
       <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
