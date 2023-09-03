@@ -1,20 +1,13 @@
 interface TodoItemProps {
     id: string
     title: string
-    completed: boolean
-    toggleTodo: (id: string, completed: boolean) => void
     deleteTodo: (id: string) => void
 }
 
-export function TodoItem({ completed, id, title, toggleTodo, deleteTodo }: TodoItemProps) {
+export function TodoItem({ id, title, deleteTodo }: TodoItemProps) {
     return (
       <li>
         <label>
-          <input
-            type="checkbox"
-            checked={completed}
-            onChange={e => toggleTodo(id, e.target.checked)}
-          />
           {title}
         </label>
         <button onClick={() => deleteTodo(id)} className="btn btn-danger">

@@ -70,14 +70,35 @@
   
   .list {
     margin: 0;
-    padding: 0;
-    margin-left: 1rem;
+    padding: 1rem;
+    margin-left: 0.1rem;
     list-style: none;
   }
-  
-  .list li:has(input:checked) label {
-    color: hsl(200, 20%, 40%);
+
+  .list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+  .profile-content {
+    flex: 1;
   }
+
+  .list-item label {
+  font-size: 1rem;
+  color: hsl(200, 100%, 90%);
+}
+
+.list-item button {
+  background: none;
+  border: none;
+  color: hsl(0, 100%, 40%);
+  font-size: 0.75rem;
+  cursor: pointer;
+  outline: none;
+}
   
   .list {
     display: flex;
@@ -88,6 +109,7 @@
   .list li {
     display: flex;
     gap: 0.5rem;
+    margin-bottom: .25rem;
     align-items: center;
   }
   
@@ -111,34 +133,6 @@
     position: absolute;
   }
   
-  .list li label::before {
-    content: "";
-    display: block;
-    width: 0.9rem;
-    height: 0.9rem;
-    background: hsl(200, 100%, 90%);
-    border-radius: 0.25em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .list li label:hover::before {
-    background: hsl(200, 100%, 80%);
-  }
-  
-  .list li:has(input:checked) label::before {
-    content: "✔";
-    background: hsl(200, 100%, 40%);
-    color: hsl(200, 100%, 90%);
-    font-size: 0.75rem;
-    font-weight: bold;
-  }
-  
-  .list li:has(input:checked) label:hover::before {
-    background: hsl(200, 100%, 30%);
-  }
- 
 /* Updated CSS */
 .header-container {
   display: flex;

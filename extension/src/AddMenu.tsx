@@ -1,15 +1,32 @@
+import { useState } from "react";
+
 interface AddMenuProps {
   onClose: () => void;
-  addProfile: () => void;
+  addProfile: (title: string) => void;
 }
 
 const AddMenu = ({ onClose, addProfile }: AddMenuProps) => {
+    const [newItem, setNewItem] = useState("")
+
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        if (newItem === "") return
+
+        addProfile(newItem)
+
+        setNewItem("")
+    }
+
   return (
+    <form onSubmit={handleSubmit}>
     <div className="add-menu">
       <h2 className="add-menu-header">Add Profile</h2>
       <div className="form-row">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" className="input-field" />
+        <label htmlFor="item">Name:</label>
+        <input 
+        value={newItem}
+        onChange={e => setNewItem(e.target.value)}
+        type="text" id="item" className="input-field" />
       </div>
       <div className="form-row">
         <label htmlFor="plugin1">Plugin 1:</label>
@@ -37,9 +54,10 @@ const AddMenu = ({ onClose, addProfile }: AddMenuProps) => {
       </div>
       <div className="button-container">
         <button className="btn btn-secondary" onClick={onClose}>Close</button>
-        <button className="btn btn-primary" onClick={addProfile}>Submit</button>
+        <button className="btn btn-primary">Submit</button>
       </div>
     </div>
+    </form>
   );
 };
 

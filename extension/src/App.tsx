@@ -8,7 +8,6 @@ import AddMenu from "./AddMenu";
 export interface TodoItemProp {
   id: string;
   title: string;
-  completed: boolean;
 }
 
 const App: FC = () => {
@@ -28,19 +27,8 @@ const App: FC = () => {
   function addTodo(title: string) {
     setTodos((currentTodos: TodoItemProp[]) => [
       ...currentTodos,
-      { id: crypto.randomUUID(), title, completed: false },
+      { id: crypto.randomUUID(), title},
     ]);
-  }
-
-  function toggleTodo(id: string, completed: boolean) {
-    setTodos((currentTodos: TodoItemProp[]) =>
-      currentTodos.map((todo: TodoItemProp) => {
-        if (todo.id === id) {
-          return { ...todo, completed };
-        }
-        return todo;
-      })
-    );
   }
 
   function deleteTodo(id: string) {
@@ -50,7 +38,9 @@ const App: FC = () => {
   }
 
   const addProfile = () => {
+    addSampleTodo();
     setMenuOpen(false);
+
   };
 
   const handleButtonClick = () => {
@@ -60,14 +50,21 @@ const App: FC = () => {
   const handleCloseMenu = () => {
     setMenuOpen(false);
   }
+
+  const addSampleTodo = () => {
+    setTodos((currentTodos: TodoItemProp[]) => [
+      ...currentTodos,
+      { id: crypto.randomUUID(), title: "Sample Todo"},
+    ]);
+  }
  
   return (
     <>
       <Header onButtonClick={handleButtonClick}/> 
-      {isMenuOpen && <AddMenu onClose={handleCloseMenu} addProfile={addProfile} />}
+      {isMenuOpen && <AddMenu onClose={handleCloseMenu} addProfile={addTodo} />}
       {/* <NewTodoForm onSubmit={addTodo} /> */}
       {/* <h1 className="header">Todo List</h1> */}
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} /> {/* toggleTodo={toggleTodo}*/}
     </>
   );
 };
