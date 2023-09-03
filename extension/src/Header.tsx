@@ -1,12 +1,14 @@
 interface HeaderProps {
-    onButtonClick: () => void;
+  onButtonClick: () => void;
 }
 
 const Header = ({ onButtonClick }: HeaderProps) => {
   return (
-    <div>
-    <h1 className="header">Todo List</h1>
-      <button onClick={onButtonClick}>Click me</button>
+    <div className="header-container">
+      <h1 className="header">Todo List</h1>
+      <button className="btn-header" onClick={onButtonClick}>
+        Add Profile
+      </button>
     </div>
   );
 };
