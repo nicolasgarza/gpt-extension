@@ -1,19 +1,21 @@
 import { FC, useEffect, useState } from "react";
-import { NewTodoForm } from "./NewTodoForm";
 import "./styles.css";
-import { TodoList } from "./TodoList";
+import { ProfileList } from "./ProfileList";
 import  Header from "./header";
 import AddMenu from "./AddMenu";
 
-export interface TodoItemProp {
+export interface ProfileItemProp {
   id: string;
   title: string;
+  plugin1: string;
+  plugin2: string;
+  plugin3: string;
 }
 
 const App: FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const [todos, setTodos] = useState<TodoItemProp[]>(() => {
+  const [profiles, setProfiles] = useState<ProfileItemProp[]>(() => {
     const localValue = localStorage.getItem("ITEMS");
     if (localValue == null) return [];
 
@@ -21,27 +23,26 @@ const App: FC = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("ITEMS", JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem("ITEMS", JSON.stringify(profiles));
+    console.log(profiles)
+  }, [profiles]);
 
-  function addTodo(title: string) {
-    setTodos((currentTodos: TodoItemProp[]) => [
-      ...currentTodos,
-      { id: crypto.randomUUID(), title},
+  function addProfile(title: string, plugin1: string, plugin2: string, plugin3: string) {
+    setProfiles((currentProfiles: ProfileItemProp[]) => [
+      ...currentProfiles,
+      { id: crypto.randomUUID(), title, plugin1, plugin2, plugin3},
     ]);
   }
 
-  function deleteTodo(id: string) {
-    setTodos((currentTodos: TodoItemProp[]) =>
-      currentTodos.filter((todo: TodoItemProp) => todo.id !== id)
+  function deleteProfile(id: string) {
+    setProfiles((currentProfiles: ProfileItemProp[]) =>
+      currentProfiles.filter((profile: ProfileItemProp) => profile.id !== id)
     );
   }
 
-  const addProfile = () => {
-    addSampleTodo();
-    setMenuOpen(false);
-
-  };
+  function editProfile(id: string) {
+    console.log(`Editing profile ${id}`);
+  }
 
   const handleButtonClick = () => {
     setMenuOpen((prevMenuOpen) => !prevMenuOpen);
@@ -51,20 +52,11 @@ const App: FC = () => {
     setMenuOpen(false);
   }
 
-  const addSampleTodo = () => {
-    setTodos((currentTodos: TodoItemProp[]) => [
-      ...currentTodos,
-      { id: crypto.randomUUID(), title: "Sample Todo"},
-    ]);
-  }
- 
   return (
     <>
       <Header onButtonClick={handleButtonClick}/> 
-      {isMenuOpen && <AddMenu onClose={handleCloseMenu} addProfile={addTodo} />}
-      {/* <NewTodoForm onSubmit={addTodo} /> */}
-      {/* <h1 className="header">Todo List</h1> */}
-      <TodoList todos={todos} deleteTodo={deleteTodo} /> {/* toggleTodo={toggleTodo}*/}
+      {isMenuOpen && <AddMenu onClose={handleCloseMenu} addProfile={addProfile} />}
+      <ProfileList profiles={profiles} deleteProfile={deleteProfile} editProfile={editProfile}/> 
     </>
   );
 };
