@@ -17,6 +17,7 @@ export interface ProfileItemProp {
 const App: FC = () => {
   const [isEditMenuOpen, setEditMenuOpen] = useState(false);
   const [isAddMenuOpen, setAddMenuOpen] = useState(false);
+  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null); // Add selectedProfileId state
 
   const [profiles, setProfiles] = useState<ProfileItemProp[]>(() => {
     const localValue = localStorage.getItem("ITEMS");
@@ -48,22 +49,25 @@ const App: FC = () => {
     );
   }
 
-  const handleEditButtonClick = () => {
+  const handleEditButtonClick = (profileId: string) => {
+    setSelectedProfileId(profileId);
     setEditMenuOpen(true);
-  }
+  };
+
   function editProfile(id: string) {
-    console.log(`Editing profile ${id}`);
-    setEditMenuOpen((prevEditMenuOpen) => !prevEditMenuOpen); 
+    setSelectedProfileId(id);
+    setEditMenuOpen(true);
   }
 
   return (
     <>
-      <Header onButtonClick={() =>  setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
+      <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
       {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} />}
-      <ProfileList profiles={profiles} deleteProfile={deleteProfile} editProfile={editProfile} onEditButtonClick={handleEditButtonClick} />
-      {isEditMenuOpen && (
+      <ProfileList profiles={profiles} deleteProfile={deleteProfile} editProfile={editProfile} />
+      {selectedProfileId && isEditMenuOpen && (
         <EditMenu
           profiles={profiles}
+          selectedProfileId={selectedProfileId}
           onEdit={() => setEditMenuOpen(false)} 
           onDelete={deleteProfile}
           onClose={() => setEditMenuOpen(false)} 

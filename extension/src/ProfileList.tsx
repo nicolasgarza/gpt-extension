@@ -1,4 +1,6 @@
 import { ProfileItemProp } from "./App";
+import { useState } from "react"; 
+import EditMenu from "./EditMenu"; // Import the EditMenu component
 
 interface ProfileListProps {
   profiles: ProfileItemProp[];
@@ -11,6 +13,12 @@ export function ProfileList({
   deleteProfile,
   editProfile,
 }: ProfileListProps) {
+  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
+
+  const handleEditButtonClick = (profileId: string) => {
+    setSelectedProfileId(profileId);
+  };
+
   return (
     <ul className="list">
       {profiles.length === 0 && <p>No Profiles</p>}
@@ -20,8 +28,8 @@ export function ProfileList({
             <label>{profile.title}</label>
           </div>
           <button 
-          className="btn btn-primary"
-          onClick={() => editProfile(profile.id)}
+            className="btn btn-primary"
+            onClick={() => handleEditButtonClick(profile.id)}
           >
             Edit
           </button>
@@ -31,6 +39,15 @@ export function ProfileList({
           >
             Delete
           </button>
+          {selectedProfileId === profile.id && (
+            <EditMenu
+              profiles={profiles}
+              selectedProfileId={selectedProfileId}
+              onEdit={editProfile}
+              onDelete={deleteProfile}
+              onClose={() => setSelectedProfileId(null)}
+            />
+          )}
         </li>
       ))}
     </ul>
