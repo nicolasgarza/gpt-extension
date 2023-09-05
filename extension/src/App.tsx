@@ -65,11 +65,9 @@ const App: FC = () => {
         <EditMenu
           onClose={() => setSelectedProfileId(null)} // Close the edit menu
           onEdit={() => {
-            // Implement your edit plugins logic here
             setSelectedProfileId(null); // Close the edit menu after editing
           }}
           onDelete={() => {
-            // Implement your delete profile logic here
             setSelectedProfileId(null); // Close the edit menu after deleting
           }}
         />
