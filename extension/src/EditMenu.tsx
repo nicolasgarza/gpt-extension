@@ -1,11 +1,13 @@
 // EditMenu.tsx
+import { ProfileItemProp } from "./App";
 interface EditMenuProps {
+  profiles: ProfileItemProp[];
+  onDelete: (id: string) => void;
   onEdit: () => void;
-  onDelete: () => void;
   onClose: () => void;
 }
 
-const EditMenu: React.FC<EditMenuProps> = ({ onEdit, onDelete, onClose }) => {
+const EditMenu: React.FC<EditMenuProps> = ({ profiles, onEdit, onDelete, onClose }: EditMenuProps) => {
   return (
     <div className="edit-menu">
       <h2>Edit Profile</h2>
@@ -32,9 +34,12 @@ const EditMenu: React.FC<EditMenuProps> = ({ onEdit, onDelete, onClose }) => {
           <option value="option3">Option 3</option>
         </select>
       </div>
-      <button className="delete-button" onClick={onDelete}>
-        Delete Profile
-      </button>
+      <button
+            className="btn btn-danger"
+            onClick={() => console.log("Delete")}
+          >
+            Delete
+          </button>
       <button className="close-button" onClick={onClose}>
         Close
       </button>
