@@ -15,7 +15,7 @@ export interface ProfileItemProp {
 }
 
 const App: FC = () => {
-  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
+  const [isEditMenuOpen, setEditMenuOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const [profiles, setProfiles] = useState<ProfileItemProp[]>(() => {
@@ -49,7 +49,7 @@ const App: FC = () => {
 
   function editProfile(id: string) {
     console.log(`Editing profile ${id}`);
-    setSelectedProfileId(id); // Set the selected profile ID
+    setEditMenuOpen((prevEditMenuOpen) => !prevEditMenuOpen); 
   }
 
   const handleButtonClick = () => {
@@ -61,15 +61,11 @@ const App: FC = () => {
       <Header onButtonClick={handleButtonClick} />
       {isMenuOpen && <AddMenu onClose={() => setMenuOpen(false)} addProfile={addProfile} />}
       <ProfileList profiles={profiles} deleteProfile={deleteProfile} editProfile={editProfile} />
-      {selectedProfileId && (
+      {isEditMenuOpen && (
         <EditMenu
-          onClose={() => setSelectedProfileId(null)} // Close the edit menu
-          onEdit={() => {
-            setSelectedProfileId(null); // Close the edit menu after editing
-          }}
-          onDelete={() => {
-            setSelectedProfileId(null); // Close the edit menu after deleting
-          }}
+          onEdit={() => setEditMenuOpen(false)} // Close the edit menu
+          onDelete={() => console.log("Delete profile clicked")}
+          onClose={() => setEditMenuOpen(false)} // Close the edit menu
         />
       )}
     </>
