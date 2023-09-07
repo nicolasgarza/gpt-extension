@@ -14,15 +14,19 @@ const EditMenu: React.FC<EditMenuProps> = ({
 }) => {
 
   return (
+    <>
     <div className="edit-menu">
       <h2>Edit Profile</h2>
+      <label htmlFor="item">Rename: </label>
       <input 
       type="text"
       value={profileTitle}
       onChange={handleNameChange}
+      id="item"
       />
       <button onClick={handleSave}>Save</button>
     </div>
+    </>
   );
 };
 
