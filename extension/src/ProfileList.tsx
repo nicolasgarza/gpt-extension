@@ -1,6 +1,6 @@
 import { ProfileProp } from "./App";
-import { ProfileItem } from "./profileitem"
 import { useState } from "react"; 
+import Profileitem from "./profileitem"
 
 interface ProfileListProps {
   profiles: ProfileProp[];
@@ -9,11 +9,10 @@ interface ProfileListProps {
 
 export function ProfileList({
   profiles,
-  deleteProfile,
 }: ProfileListProps) {
-  const [isEditMenuOpen, setEditMenuOpen] = useState<number | null>(null);
+  const [isEditMenuOpen, setEditMenuOpen] = useState< string | null>(null);
 
-  const toggleMenu = (profileId: number) => {
+  const toggleMenu = (profileId: string) => {
     setEditMenuOpen((prevId) => (prevId === profileId ? null : profileId));
   };
 
@@ -22,7 +21,7 @@ export function ProfileList({
       {profiles.length === 0 && "No Todos"}
       {profiles.map(profile => {
         return (
-          <ProfileItem
+          <Profileitem
             {...profile}
             key={profile.id}
             isMenuOpen={isEditMenuOpen === profile.id}

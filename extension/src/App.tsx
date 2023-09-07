@@ -14,6 +14,12 @@ export interface ProfileProp {
   plugin3: string;
 }
 
+declare global {
+  interface Crypto {
+    randomUUID: () => string;
+  }
+}
+
 const App: FC = () => {
   const [isEditMenuOpen, setEditMenuOpen] = useState(false);
   const [isAddMenuOpen, setAddMenuOpen] = useState(false);
@@ -54,14 +60,7 @@ const App: FC = () => {
       <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
       {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} />}
       <ProfileList profiles={profiles} deleteProfile={deleteProfile}/>
-      {selectedProfileId && isEditMenuOpen && (
-        <EditMenu
-          profiles={profiles}
-          selectedProfileId={selectedProfileId}
-          onDelete={deleteProfile}
-          onClose={() => setEditMenuOpen(false)} 
-        />
-      )}
+      
     </>
   );
 };
