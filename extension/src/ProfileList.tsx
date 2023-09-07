@@ -1,55 +1,35 @@
-import { ProfileItemProp } from "./App";
+import { ProfileProp } from "./App";
+import { ProfileItem } from "./profileitem"
 import { useState } from "react"; 
-import EditMenu from "./EditMenu"; // Import the EditMenu component
 
 interface ProfileListProps {
-  profiles: ProfileItemProp[];
+  profiles: ProfileProp[];
   deleteProfile: (id: string) => void;
-  editProfile: (id: string) => void;
 }
 
 export function ProfileList({
   profiles,
   deleteProfile,
-  editProfile,
 }: ProfileListProps) {
-  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
+  const [isEditMenuOpen, setEditMenuOpen] = useState<number | null>(null);
 
-  const handleEditButtonClick = (profileId: string) => {
-    setSelectedProfileId(profileId);
+  const toggleMenu = (profileId: number) => {
+    setEditMenuOpen((prevId) => (prevId === profileId ? null : profileId));
   };
 
   return (
     <ul className="list">
-      {profiles.length === 0 && <p>No Profiles</p>}
-      {profiles.map((profile) => (
-        <li className="list-item" key={profile.id}>
-          <div className="profile-content">
-            <label>{profile.title}</label>
-          </div>
-          <button 
-            className="btn btn-primary"
-            onClick={() => handleEditButtonClick(profile.id)}
-          >
-            Edit
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => deleteProfile(profile.id)}
-          >
-            Delete
-          </button>
-          {selectedProfileId === profile.id && (
-            <EditMenu
-              profiles={profiles}
-              selectedProfileId={selectedProfileId}
-              onEdit={editProfile}
-              onDelete={deleteProfile}
-              onClose={() => setSelectedProfileId(null)}
-            />
-          )}
-        </li>
-      ))}
+      {profiles.length === 0 && "No Todos"}
+      {profiles.map(profile => {
+        return (
+          <ProfileItem
+            {...profile}
+            key={profile.id}
+            isMenuOpen={isEditMenuOpen === profile.id}
+            toggleMenu={toggleMenu}
+          />
+        )
+      })}
     </ul>
-  );
+  )
 }

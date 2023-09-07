@@ -1,23 +1,21 @@
 // EditMenu.tsx
-import { ProfileItemProp } from "./App";
+import { ProfileProp } from "./App";
 import { useState, useEffect } from "react"; // Import useState
 
 interface EditMenuProps {
-  profiles: ProfileItemProp[];
+  profiles: ProfileProp[];
   selectedProfileId: string | null; // Add selectedProfileId prop
   onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
   onClose: () => void;
 }
 
 const EditMenu: React.FC<EditMenuProps> = ({
   profiles,
   selectedProfileId,
-  onEdit,
   onDelete,
   onClose,
 }: EditMenuProps) => {
-  const [selectedProfile, setSelectedProfile] = useState<ProfileItemProp | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<ProfileProp | null>(null);
 
   useEffect(() => {
     if (selectedProfileId) {

@@ -6,7 +6,7 @@ import Header from "./header";
 import AddMenu from "./AddMenu";
 import EditMenu from "./EditMenu"; // Import the EditMenu component
 
-export interface ProfileItemProp {
+export interface ProfileProp {
   id: string;
   title: string;
   plugin1: string;
@@ -19,7 +19,7 @@ const App: FC = () => {
   const [isAddMenuOpen, setAddMenuOpen] = useState(false);
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null); // Add selectedProfileId state
 
-  const [profiles, setProfiles] = useState<ProfileItemProp[]>(() => {
+  const [profiles, setProfiles] = useState<ProfileProp[]>(() => {
     const localValue = localStorage.getItem("ITEMS");
     if (localValue == null) return [];
 
@@ -36,7 +36,7 @@ const App: FC = () => {
     plugin2: string,
     plugin3: string
   ) {
-    setProfiles((currentProfiles: ProfileItemProp[]) => [
+    setProfiles((currentProfiles: ProfileProp[]) => [
       ...currentProfiles,
       { id: crypto.randomUUID(), title, plugin1, plugin2, plugin3 },
     ]);
@@ -44,31 +44,20 @@ const App: FC = () => {
   }
 
   function deleteProfile(id: string) {
-    setProfiles((currentProfiles: ProfileItemProp[]) =>
-      currentProfiles.filter((profile: ProfileItemProp) => profile.id !== id)
+    setProfiles((currentProfiles: ProfileProp[]) =>
+      currentProfiles.filter((profile: ProfileProp) => profile.id !== id)
     );
-  }
-
-  const handleEditButtonClick = (profileId: string) => {
-    setSelectedProfileId(profileId);
-    setEditMenuOpen(true);
-  };
-
-  function editProfile(id: string) {
-    setSelectedProfileId(id);
-    setEditMenuOpen(true);
   }
 
   return (
     <>
       <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
       {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} />}
-      <ProfileList profiles={profiles} deleteProfile={deleteProfile} editProfile={editProfile} />
+      <ProfileList profiles={profiles} deleteProfile={deleteProfile}/>
       {selectedProfileId && isEditMenuOpen && (
         <EditMenu
           profiles={profiles}
           selectedProfileId={selectedProfileId}
-          onEdit={() => setEditMenuOpen(false)} 
           onDelete={deleteProfile}
           onClose={() => setEditMenuOpen(false)} 
         />
