@@ -1,11 +1,10 @@
+import { useState } from "react";
 import { ProfileProp } from "./App";
-import { useState } from 'react';
-import EditMenu from './EditMenu';
-import * as React from "react";
+import EditMenu from "./EditMenu";
 
 interface ProfileItemProps extends ProfileProp {
-    isMenuOpen: boolean;
-    toggleMenu: (profileId: string) => void;
+  isMenuOpen: boolean;
+  toggleMenu: (profileId: string) => void;
 }
 
 const Profileitem: React.FC<ProfileItemProps> = ({
@@ -15,40 +14,40 @@ const Profileitem: React.FC<ProfileItemProps> = ({
   plugin2, 
   plugin3,
   isMenuOpen,
-  toggleMenu,}) => {
+  toggleMenu,
+}) => {
+  const [profileTitle, setProfileTitle] = useState(title);
 
-    const [profileTitle, setProfileTitle] = useState(title)
+  const handleEdit = () => {
+    toggleMenu(id);
+  };
 
-    const handleEdit = () => {
-      toggleMenu(id);
-    };
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileTitle(e.target.value);
+  };
 
-    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setProfileTitle(e.target.value);
-    };
-
-    const handleSave = () => {
-      console.log(`Saving profile name: ${profileTitle}`)
-    };
+  const handleSave = () => {
+    console.log(`Saving profile name: ${profileTitle}`);
+  };
 
   return (
-    <>
-    <li>
-      <label>{title}</label>
-    <button onClick={handleEdit} className="btn btn-primary">
-        Edit
-    </button>
-    { isMenuOpen && (
-      <EditMenu
-      profileTitle={profileTitle}
-      handleNameChange={handleNameChange}
-      handleSave={handleSave}
-      />
-    )}
-    </li>
-    </>
+    <div className={`profile-item-container ${isMenuOpen ? 'isMenuOpen' : ''}`}>
+      <li>
+        <label>{title}</label>
+        <button onClick={handleEdit} className="btn btn-primary">
+          Edit
+        </button>
+      </li>
+      {isMenuOpen && (
+        <EditMenu
+          profileTitle={profileTitle}
+          handleNameChange={handleNameChange}
+          handleSave={handleSave}
+        />
+      )}
+    </div>
   );
-}
+   
+};
 
 export default Profileitem;
- 
