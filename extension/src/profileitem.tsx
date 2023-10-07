@@ -5,6 +5,7 @@ import EditMenu from "./EditMenu";
 interface ProfileItemProps extends ProfileProp {
   isMenuOpen: boolean;
   toggleMenu: (profileId: string) => void;
+  updateProfileTitle: (id: string, title: string) => void;
 }
 
 const Profileitem: React.FC<ProfileItemProps> = ({
@@ -15,6 +16,7 @@ const Profileitem: React.FC<ProfileItemProps> = ({
   plugin3,
   isMenuOpen,
   toggleMenu,
+  updateProfileTitle,
 }) => {
   const [profileTitle, setProfileTitle] = useState(title);
 
@@ -27,7 +29,8 @@ const Profileitem: React.FC<ProfileItemProps> = ({
   };
 
   const handleSave = () => {
-    console.log(`Saving profile name: ${profileTitle}`);
+    updateProfileTitle(id, profileTitle);
+    toggleMenu(id);
   };
 
   return (

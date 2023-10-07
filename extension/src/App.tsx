@@ -2,7 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import "./styles.css";
 import { ProfileList } from "./ProfileList";
-import Header from "./Header";
+import Header from "./header";
 import AddMenu from "./AddMenu";
 
 export interface ProfileProp {
@@ -40,6 +40,14 @@ const App: FC = () => {
     setAddMenuOpen(false);
   }
 
+  function updateProfileTitle(id: string, title: string) {
+    setProfiles((currentProfiles: ProfileProp[]) =>
+      currentProfiles.map((profile: ProfileProp) =>
+        profile.id === id ? { ...profile, title } : profile
+      )
+    );
+  }
+
   function deleteProfile(id: string) {
     setProfiles((currentProfiles: ProfileProp[]) =>
       currentProfiles.filter((profile: ProfileProp) => profile.id !== id)
@@ -50,7 +58,7 @@ const App: FC = () => {
     <>
       <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
       {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} />}
-      <ProfileList profiles={profiles} deleteProfile={deleteProfile}/>
+      <ProfileList profiles={profiles} deleteProfile={deleteProfile} updateProfileTitle={updateProfileTitle}/>
     </>
   );
 };

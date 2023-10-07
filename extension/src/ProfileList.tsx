@@ -5,10 +5,12 @@ import Profileitem from "./profileitem"
 interface ProfileListProps {
   profiles: ProfileProp[];
   deleteProfile: (id: string) => void;
+  updateProfileTitle: (id: string, title: string) => void;
 }
 
 export function ProfileList({
   profiles,
+  updateProfileTitle,
 }: ProfileListProps) {
   const [isEditMenuOpen, setEditMenuOpen] = useState< string | null>(null);
 
@@ -26,6 +28,7 @@ export function ProfileList({
             key={profile.id}
             isMenuOpen={isEditMenuOpen === profile.id}
             toggleMenu={toggleMenu}
+            updateProfileTitle={updateProfileTitle}
           />
         )
       })}
