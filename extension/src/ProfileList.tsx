@@ -10,6 +10,7 @@ interface ProfileListProps {
 
 export function ProfileList({
   profiles,
+  deleteProfile,
   updateProfileTitle,
 }: ProfileListProps) {
   const [isEditMenuOpen, setEditMenuOpen] = useState< string | null>(null);
@@ -28,6 +29,7 @@ export function ProfileList({
             key={profile.id}
             isMenuOpen={isEditMenuOpen === profile.id}
             toggleMenu={toggleMenu}
+            deleteProfile={deleteProfile}
             updateProfileTitle={updateProfileTitle}
           />
         )

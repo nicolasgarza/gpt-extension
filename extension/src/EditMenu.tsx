@@ -1,15 +1,21 @@
 // EditMenu.tsx
 import * as React from "react";
+import { ProfileProp } from "./App";
 
-interface EditMenuProps {
-  profileTitle: string;
+interface EditMenuProps extends ProfileProp {
   handleNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+  deleteProfile: (id: string) => void;
   handleSave: () => void;
 }
 
 const EditMenu: React.FC<EditMenuProps> = ({
-  profileTitle,
+  title,
+  id,
+  plugin1,
+  plugin2,
+  plugin3,
   handleNameChange,
+  deleteProfile,
   handleSave
 }) => {
 
@@ -20,11 +26,12 @@ const EditMenu: React.FC<EditMenuProps> = ({
       <label htmlFor="item">Rename: </label>
       <input 
       type="text"
-      value={profileTitle}
+      value={title}
       onChange={handleNameChange}
       id="item"
       />
       <button onClick={handleSave}>Save</button>
+      <button className="btn btn-danger" onClick={() => deleteProfile(id)}>Delete</button>
     </div>
     </>
   );

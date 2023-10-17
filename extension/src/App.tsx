@@ -2,7 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import "./styles.css";
 import { ProfileList } from "./ProfileList";
-import Header from "./header";
+import Header from "./Header";
 import AddMenu from "./AddMenu";
 
 export interface ProfileProp {
