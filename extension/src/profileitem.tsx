@@ -32,6 +32,7 @@ const Profileitem: React.FC<ProfileItemProps> = ({
 
   const handleSave = () => {
     updateProfileTitle(id, profileTitle);
+    console.log("Plugin 1: " + plugin1 + " Plugin 2: " + plugin2 + " Plugin 3: " + plugin3);
     toggleMenu(id);
   };
 

@@ -27,6 +27,12 @@ const App: FC = () => {
     localStorage.setItem("ITEMS", JSON.stringify(profiles));
   }, [profiles]);
 
+  const pluginDict = {
+    "Plugin 1": null,
+    "Plugin 2": null,
+    "Plugin 3": null,
+  }
+
   function addProfile(
     title: string,
     plugin1: string,
@@ -48,6 +54,14 @@ const App: FC = () => {
     );
   }
 
+  function updateProfilePlugin1(id: string, plugin1: string) {
+    setProfiles((currentProfiles: ProfileProp[]) =>
+      currentProfiles.map((profile: ProfileProp) =>
+        profile.id === id ? { ...profile, plugin1 } : profile
+      )
+    );
+  }
+
   function deleteProfile(id: string) {
     setProfiles((currentProfiles: ProfileProp[]) =>
       currentProfiles.filter((profile: ProfileProp) => profile.id !== id)
@@ -57,7 +71,7 @@ const App: FC = () => {
   return (
     <>
       <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
-      {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} />}
+      {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} pluginList = {pluginDict} />}
       <ProfileList profiles={profiles} deleteProfile={deleteProfile} updateProfileTitle={updateProfileTitle}/>
     </>
   );
