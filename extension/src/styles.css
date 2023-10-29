@@ -27,6 +27,7 @@
     background: hsl(200, 100%, 50%, 0.1);
     border: 1px solid hsl(200, 100%, 50%);
     color: hsl(200, 100%, 50%);
+    margin-right: 0.3rem;
     padding: 0.25em 0.5em;
     border-radius: 0.25em;
     cursor: pointer;
@@ -36,6 +37,7 @@
   .btn:hover,
   .btn:focus-visible {
     background: hsl(200, 100%, 50%, 0.2);
+    color: hsl(200, 100%, 90%);
   }
   
   .btn.btn-danger {
@@ -134,14 +136,13 @@
     position: absolute;
   }
   
-/* Updated CSS */
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333; /* Same color as the main application background */
+  background-color: #333; 
   padding: 1rem;
-  border-bottom: 1px solid hsl(200, 100%, 50%); /* Line below the header */
+  border-bottom: 1px solid hsl(200, 100%, 50%); 
 }
 
 .header {
@@ -204,13 +205,8 @@
   gap: 0.5rem;
 }
 
-/* Existing CSS styles */
-
-/* Add the following styles for EditMenu */
-/* Updated CSS */
-
 .profile-item-container {
-  position: relative; /* Required for positioning the edit menu */
+  position: relative; 
 }
 
 .edit-menu {
@@ -218,6 +214,7 @@
   border: 1px solid #ccc;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: .7rem;
+  z-index: 1000;
   margin-bottom: .1rem;
   border-radius: 0.25rem;
   width: 300px;
@@ -244,6 +241,13 @@
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
+}
+
+.dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  margin-bottom: 8px; 
 }
 
 .delete-button {

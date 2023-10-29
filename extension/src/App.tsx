@@ -8,9 +8,9 @@ import AddMenu from "./AddMenu";
 export interface ProfileProp {
   id: string;
   title: string;
-  plugin1: string;
-  plugin2: string;
-  plugin3: string;
+  plugin1?: string;
+  plugin2?: string;
+  plugin3?: string;
 }
 
 const App: FC = () => {
@@ -30,7 +30,8 @@ const App: FC = () => {
   const pluginDict = {
     "Plugin 1": null,
     "Plugin 2": null,
-    "Plugin 3": null,
+    "Plugin 3 Test": null,
+    "Plugin 4": null,
   }
 
   function addProfile(
@@ -46,18 +47,18 @@ const App: FC = () => {
     setAddMenuOpen(false);
   }
 
-  function updateProfileTitle(id: string, title: string) {
+  function editPlugins(id: string, plugin1?: string, plugin2?: string, plugin3?: string) {
     setProfiles((currentProfiles: ProfileProp[]) =>
       currentProfiles.map((profile: ProfileProp) =>
-        profile.id === id ? { ...profile, title } : profile
+        profile.id === id ? { ...profile, plugin1, plugin2, plugin3 } : profile
       )
     );
   }
 
-  function updateProfilePlugin1(id: string, plugin1: string) {
+  function updateProfileTitle(id: string, title: string) {
     setProfiles((currentProfiles: ProfileProp[]) =>
       currentProfiles.map((profile: ProfileProp) =>
-        profile.id === id ? { ...profile, plugin1 } : profile
+        profile.id === id ? { ...profile, title } : profile
       )
     );
   }
@@ -72,7 +73,8 @@ const App: FC = () => {
     <>
       <Header onButtonClick={() => setAddMenuOpen((prevAddMenuOpen) => !prevAddMenuOpen)} />
       {isAddMenuOpen && <AddMenu onClose={() => setAddMenuOpen(false)} addProfile={addProfile} pluginList = {pluginDict} />}
-      <ProfileList profiles={profiles} deleteProfile={deleteProfile} updateProfileTitle={updateProfileTitle}/>
+      <ProfileList profiles={profiles} deleteProfile={deleteProfile} 
+      updateProfileTitle={updateProfileTitle} editPlugins={editPlugins} pluginDict={pluginDict}/>
     </>
   );
 };

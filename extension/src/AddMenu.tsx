@@ -36,7 +36,7 @@ const AddMenu = ({ onClose, addProfile, pluginList }: AddMenuProps) => {
       </div>
       <div className="form-row">
         <label htmlFor="plugin1">Plugin 1:</label>
-        <select defaultValue="none" id="plugin1" className="input-field" 
+        <select id="plugin1" className="input-field" 
                 value={plugin1} onChange={(a) => setPlugin1(a.target.value)}>
           <option value="none">None</option>
           {Object.keys(pluginList).map((pluginName) => (
@@ -48,22 +48,26 @@ const AddMenu = ({ onClose, addProfile, pluginList }: AddMenuProps) => {
       </div>
       <div className="form-row">
         <label htmlFor="plugin2">Plugin 2:</label>
-        <select id="plugin2" className="input-field"
-        value={plugin2} 
-        onChange={(b) => setPlugin2(b.target.value)}>
-            <option value="1">Plugin 1</option>
-            <option value="2">Plugin 2</option>
-            <option value="3">Plugin 3</option>
+        <select id="plugin2" className="input-field" 
+                value={plugin2} onChange={(a) => setPlugin2(a.target.value)}>
+          <option value="none">None</option>
+          {Object.keys(pluginList).map((pluginName) => (
+            <option value={pluginName} key={pluginName}>
+              {pluginName}
+            </option>
+          ))}
         </select>
       </div>
       <div className="form-row">
         <label htmlFor="plugin3">Plugin 3:</label>
-        <select id="plugin3" className="input-field"
-        value={plugin3} 
-        onChange={(e) => setPlugin3(e.target.value)}>
-            <option value="1">Plugin 1</option>
-            <option value="2">Plugin 2</option>
-            <option value="3">Plugin 3</option>
+        <select id="plugin3" className="input-field" 
+                value={plugin3} onChange={(a) => setPlugin3(a.target.value)}>
+          <option value="none">None</option>
+          {Object.keys(pluginList).map((pluginName) => (
+            <option value={pluginName} key={pluginName}>
+              {pluginName}
+            </option>
+          ))}
         </select>
       </div>
       <div className="button-container">

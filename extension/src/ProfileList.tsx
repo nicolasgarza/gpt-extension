@@ -6,12 +6,16 @@ interface ProfileListProps {
   profiles: ProfileProp[];
   deleteProfile: (id: string) => void;
   updateProfileTitle: (id: string, title: string) => void;
+  editPlugins: (id: string, plugin1: string, plugin2: string, plugin3: string) => void;
+  pluginDict: { [key: string]: any};
 }
 
 export function ProfileList({
   profiles,
   deleteProfile,
   updateProfileTitle,
+  editPlugins,
+  pluginDict,
 }: ProfileListProps) {
   const [isEditMenuOpen, setEditMenuOpen] = useState< string | null>(null);
 
@@ -21,7 +25,7 @@ export function ProfileList({
 
   return (
     <ul className="list">
-      {profiles.length === 0 && "No Todos"}
+      {profiles.length === 0 && "No Profiles"}
       {profiles.map(profile => {
         return (
           <Profileitem
@@ -31,6 +35,8 @@ export function ProfileList({
             toggleMenu={toggleMenu}
             deleteProfile={deleteProfile}
             updateProfileTitle={updateProfileTitle}
+            editPlugins={editPlugins}
+            pluginDict={pluginDict}
           />
         )
       })}
